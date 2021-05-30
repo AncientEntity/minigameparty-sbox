@@ -1,0 +1,68 @@
+
+
+text.title
+{
+	font-family: Poppins;
+	font-size: 50px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 70px;
+	top: 30px;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
+}
+
+text.desc
+{
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 72px;
+	top: 50px;
+}
+text.desc2
+{
+	font-family: Poppins;
+	font-size: 20px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 72px;
+	top: 50px;
+	width: 400px;
+}
+div.health
+{
+	background-color: rgba(80,80,80,0.0);
+	left: 400%;
+	bottom: -85%;
+	width: 23%;
+	height: 10%;
+}
+
+text.health 
+{
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 900;
+	color: white;
+	left: 93%;
+	top: 85%;
+	width: 100%;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
+}
+
+text.score 
+{
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 92.8%;
+	top: 89%;
+	width: 100%;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
+}

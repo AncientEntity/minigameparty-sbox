@@ -1,0 +1,20 @@
+{
+		"name": "minigameparty",
+		"sharedassets": "*.*",
+		
+		"depends": 
+		[
+			"base",
+			"citizen",
+			"rust"
+		],
+
+		"gamemodes":
+		[
+			{
+				"name": "minigameparty",
+				"title": "Minigame Party",
+				"description": "10 rounds, 10 minigames, see who can get the most amount of points and win the game!‍\nGame by Ancient Entity."
+			}
+		]
+}
