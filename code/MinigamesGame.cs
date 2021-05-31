@@ -139,6 +139,10 @@ namespace Minigames
 						currentMinigameIndex = forcedMinigame;
 						forcedMinigame = -1;
 					}
+					foreach(MinigamePlayer player in MinigamePlayer.allPlayers)
+					{
+						player.Position = SpawnPoints.RandomOpenAreaSpawnPoint();
+					}
 					currentMinigame.StartMinigame();
 					Log.Info( "Starting next round: " + currentMinigame.name + "|" + currentMinigame.desc );
 					currentState = gameStates.playing;

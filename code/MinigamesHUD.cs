@@ -23,6 +23,7 @@ namespace Minigames
 				RootPanel.AddChild<GameStats>();
 				RootPanel.AddChild<ChatBox>();
 				RootPanel.AddChild<Health>();
+				RootPanel.AddChild<NameTags>();
 			}
 		}
 

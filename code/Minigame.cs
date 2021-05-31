@@ -7,12 +7,13 @@ namespace Minigames
 		public string name { get; set; }
 		public string desc { get; set; }
 		public int minPlayers { get; set; }
+		public spawnZones spawnZone { get; set; }
 		public EventEntity eventEntity = null;
 
 
 		public Minigame() { }
 
-		public Minigame(string name, string desc, EventEntity eventEntity, int minPlayers = 1)
+		public Minigame(string name, string desc, EventEntity eventEntity, int minPlayers = 1, spawnZones zone = spawnZones.openArea)
 		{
 			this.name = name;
 			this.desc = desc;
@@ -38,6 +39,24 @@ namespace Minigames
 			}
 			eventEntity.enabled = false;
 		}
+
+		public Vector3 GetRandomSpawn()
+		{
+			if(spawnZone == spawnZones.openArea)
+			{
+				return SpawnPoints.RandomOpenAreaSpawnPoint();
+			} else if (spawnZone == spawnZones.waiting)
+			{
+				return SpawnPoints.RandomWaitingSpawnPoint();
+			}
+			return SpawnPoints.RandomOpenAreaSpawnPoint();
+		}
+
+		public enum spawnZones
+		{
+			waiting,
+			openArea,
+		}
 	}
 
 	public partial class MinigamesGame
@@ -46,29 +65,29 @@ namespace Minigames
 		{
 			if ( !IsServer )
 			{
-				minigames.Add( new Minigame( "Errorpocolypse", "Avoid the errors or you'll become one!", null ) );
+				minigames.Add( new Minigame( "Errorpocolypse", "Avoid the errors or you'll become one!", null ,1,Minigame.spawnZones.openArea) );
 			}
 			else
 			{
-				minigames.Add( new Minigame( "Errorpocolypse", "Avoid the errors or you'll become one!", new ErrorEventEntity() ) );
+				minigames.Add( new Minigame( "Errorpocolypse", "Avoid the errors or you'll become one!", new ErrorEventEntity(),1, Minigame.spawnZones.openArea ) );
 			}
 			if ( !IsServer )
 			{
-				minigames.Add( new Minigame( "Melon Hail", "It's raining watermelons!", null ) );
+				minigames.Add( new Minigame( "Melon Hail", "It's raining watermelons!", null, 1,Minigame.spawnZones.openArea ) );
 			}
 			else
 			{
-				minigames.Add( new Minigame( "Melon Hail", "It's raining watermelons!", new MelonHailEventEntity() ) );
+				minigames.Add( new Minigame( "Melon Hail", "It's raining watermelons!", new MelonHailEventEntity(),1, Minigame.spawnZones.openArea ) );
 
 			}
 			if ( !IsServer )
 			{
-				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", null, 2 ) );
+				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", null, 2, Minigame.spawnZones.openArea ) );
 			}
 			else
 			{
 
-				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", new YouGetAGunEventEntity(), 2 ) );
+				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", new YouGetAGunEventEntity(), 2, Minigame.spawnZones.openArea ) );
 			}
 			//minigames.Add( new Minigame( "Terrynado", "Tornado but it's a bunch of Terries!", null ) );
 

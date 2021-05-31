@@ -26,6 +26,9 @@ namespace Minigames
 
 		public override void Respawn()
 		{
+			Host.AssertServer();
+
+
 			SetModel( "models/citizen/citizen.vmdl" );
 
 			//
@@ -56,11 +59,23 @@ namespace Minigames
 			EnableShadowInFirstPerson = true;
 			Dress();
 			//Inventory.SetActiveSlot( 0, true );
-			base.Respawn();
+			LifeState = LifeState.Alive;
+			Health = 100;
+			Velocity = Vector3.Zero;
+			WaterLevel.Clear();
 
-			if(IsServer)
+			CreateHull();
+
+			ResetInterpolation();
+
+
+			if (IsServer)
 			{
-				living.Add( this );
+				if ( !living.Contains( this ) )
+				{
+					living.Add( this );
+				}
+				Position = SpawnPoints.RandomWaitingSpawnPoint();
 			}
 		}
 
@@ -82,7 +97,7 @@ namespace Minigames
 			}
 			TickPlayerUse();
 			SimulateActiveChild( cl, ActiveChild );
-			if ( IsServer && LifeState == LifeState.Dead)
+			if ( IsServer && LifeState == LifeState.Dead )
 			{
 				if ( MinigamesGame.game.currentState == MinigamesGame.gameStates.waiting )
 				{
@@ -90,7 +105,7 @@ namespace Minigames
 				}
 			}
 
-			var controller = GetActiveController();
+		var controller = GetActiveController();
 			controller?.Simulate( cl, this, GetActiveAnimator() );
 			//If we're running serverside and Attack1 was just pressed, spawn a ragdoll
 
@@ -142,7 +157,7 @@ namespace Minigames
 			{
 				GrantPoints();
 				living.Remove( this );
-				if(living.Count == MinigamesGame.game.currentMinigame.minPlayers-1)
+				if(living.Count <= MinigamesGame.game.currentMinigame.minPlayers-1)
 				{
 					MinigamesGame.game.EndRound();
 				}
