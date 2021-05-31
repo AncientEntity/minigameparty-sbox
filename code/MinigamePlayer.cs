@@ -105,8 +105,9 @@ namespace Minigames
 				}
 			}
 
-		var controller = GetActiveController();
-			controller?.Simulate( cl, this, GetActiveAnimator() );
+
+			var controller = GetActiveController();
+				controller?.Simulate( cl, this, GetActiveAnimator() );
 			//If we're running serverside and Attack1 was just pressed, spawn a ragdoll
 
 
@@ -199,7 +200,7 @@ namespace Minigames
 				suffix = "nd";
 			else if ( placement == 3 )
 				suffix = "rd";
-			ChatBox.AddChatEntry("Minigames",this.Owner.ToString().Split("/")[1] + " got "+placement+suffix+" place.");
+			ChatBox.AddChatEntry("Minigames",this.Owner.ToString().Split("/")[1] + " got "+placement+suffix+" place.","materials/minigames/tux.png");
 		}
 	}
 }

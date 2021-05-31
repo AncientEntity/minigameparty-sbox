@@ -18,6 +18,7 @@ namespace Minigames
 			this.name = name;
 			this.desc = desc;
 			this.minPlayers = minPlayers;
+			this.spawnZone = zone;
 			this.eventEntity = eventEntity;
 		}
 
@@ -48,6 +49,9 @@ namespace Minigames
 			} else if (spawnZone == spawnZones.waiting)
 			{
 				return SpawnPoints.RandomWaitingSpawnPoint();
+			} else if (spawnZone == spawnZones.closedArea)
+			{
+				return SpawnPoints.RandomClosedAreaSpawnPoint();
 			}
 			return SpawnPoints.RandomOpenAreaSpawnPoint();
 		}
@@ -56,6 +60,7 @@ namespace Minigames
 		{
 			waiting,
 			openArea,
+			closedArea,
 		}
 	}
 
@@ -82,12 +87,12 @@ namespace Minigames
 			}
 			if ( !IsServer )
 			{
-				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", null, 2, Minigame.spawnZones.openArea ) );
+				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", null, 2, Minigame.spawnZones.closedArea ) );
 			}
 			else
 			{
 
-				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", new YouGetAGunEventEntity(), 2, Minigame.spawnZones.openArea ) );
+				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", new YouGetAGunEventEntity(), 2, Minigame.spawnZones.closedArea ) );
 			}
 			//minigames.Add( new Minigame( "Terrynado", "Tornado but it's a bunch of Terries!", null ) );
 

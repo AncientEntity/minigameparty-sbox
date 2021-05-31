@@ -141,7 +141,7 @@ namespace Minigames
 					}
 					foreach(MinigamePlayer player in MinigamePlayer.allPlayers)
 					{
-						player.Position = SpawnPoints.RandomOpenAreaSpawnPoint();
+						player.Position = currentMinigame.GetRandomSpawn();
 					}
 					currentMinigame.StartMinigame();
 					Log.Info( "Starting next round: " + currentMinigame.name + "|" + currentMinigame.desc );
@@ -158,6 +158,7 @@ namespace Minigames
 						player.GrantPoints();
 						player.Health = 100;
 						player.Inventory.DeleteContents();
+						player.Position = SpawnPoints.RandomWaitingSpawnPoint();
 					}
 					foreach(Entity e in eventEntities)
 					{

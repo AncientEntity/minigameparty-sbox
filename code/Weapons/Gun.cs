@@ -10,6 +10,7 @@ partial class Gun : Weapon
 	public int perClip = 5;
 
 	public TimeSince TimeSinceDischarge { get; set; }
+	public TimeSince TimeSinceReload { get; set; }
 
 	public override void Spawn()
 	{
@@ -23,7 +24,7 @@ partial class Gun : Weapon
 	/// </summary>
 	public override bool CanPrimaryAttack()
 	{
-		if ( !Owner.Input.Pressed( InputButton.Attack1 ) )
+		if ( !Owner.Input.Pressed( InputButton.Attack1 ) || ammo <= 0 || TimeSinceReload <= 3f)
 			return false;
 
 		return base.CanPrimaryAttack();
@@ -33,16 +34,13 @@ partial class Gun : Weapon
 	{
 		base.Reload();
 		ammo = perClip;
+		TimeSinceReload = 0;
 
 		ViewModelEntity?.SetAnimBool( "reload", true );
 	}
 
 	public override void AttackPrimary()
 	{
-		if(ammo <= 0)
-		{
-			return;
-		}
 		ammo--;
 		TimeSincePrimaryAttack = 0;
 		TimeSinceSecondaryAttack = 0;
