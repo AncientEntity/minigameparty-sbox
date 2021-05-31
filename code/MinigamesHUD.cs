@@ -19,7 +19,7 @@ namespace Minigames
 			if ( IsClient )
 			{
 				root = this;
-
+				RootPanel.StyleSheet.Load( "/ui/MinigamesHUD.scss" );
 				RootPanel.AddChild<GameStats>();
 				RootPanel.AddChild<ChatBox>();
 				RootPanel.AddChild<Health>();
@@ -39,7 +39,7 @@ namespace Minigames
 
 			public Health()
 			{
-				SetTemplate( "/HealthHUD.html" );
+				SetTemplate( "/ui/HealthHUD.html" );
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace Minigames
 			}
 			public GameStats()
 			{
-				SetTemplate( "/MinigamesHUD.html" );
+				SetTemplate( "/ui/MinigamesHUD.html" );
 			}
 		}
 	}

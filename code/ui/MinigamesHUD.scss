@@ -1,0 +1,123 @@
+
+
+text.title
+{
+	font-family: Poppins;
+	font-size: 50px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 70px;
+	top: 30px;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
+}
+
+text.desc
+{
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 72px;
+	top: 50px;
+}
+text.desc2
+{
+	font-family: Poppins;
+	font-size: 20px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 72px;
+	top: 50px;
+	width: 400px;
+}
+div.health
+{
+	background-color: rgba(80,80,80,0.0);
+	left: 400%;
+	bottom: -85%;
+	width: 23%;
+	height: 10%;
+}
+
+text.health 
+{
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 900;
+	color: white;
+	left: 93%;
+	top: 85%;
+	width: 100%;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
+}
+
+text.score 
+{
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	left: 92.8%;
+	top: 89%;
+	width: 100%;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
+}
+
+
+InventoryBar {
+    position: absolute;
+    width: 100%;
+    bottom: 48px;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+InventoryIcon {
+    width: 80px;
+    height: 80px;
+    border: 1px solid rgba( white, 0.4 );
+    background-color: rgba( #4d98ce, 0.0 );
+    margin: 0px 2px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    margin-top: 10px;
+    font-family: poppins;
+
+    .item-name {
+        padding: 5px;
+        color: white;
+        text-align: center;
+        left: 0;
+        right: 0;
+        font-size: 11px;
+        position: absolute;
+        bottom: 0;
+        opacity: 0.5;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .slot-number {
+        font-size: 15px;
+        color: white;
+        font-weight: 500;
+        opacity: 0.1;
+        position: absolute;
+        top: 1px;
+        right: 5px;
+    }
+
+    &.active {
+        background-color: rgba( #4d98ce, 0.5 );
+        border: 1px solid rgba( white, 0.8 );
+        transition: all 0.1s ease-out;
+
+        .item-name {
+            opacity: 1;
+            transition: all 0.1s ease-out;
+        }
+    }
+}

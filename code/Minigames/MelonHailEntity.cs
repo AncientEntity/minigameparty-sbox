@@ -55,6 +55,7 @@ namespace Minigames
 				timeSinceStart = 0;
 
 				MinigamesGame.RegisterEventEntity( this );
+				
 			}
 
 
@@ -71,6 +72,7 @@ namespace Minigames
 				{
 					return;
 				}
+
 				bool debug_prop_explosion = false;
 
 				//Go boom

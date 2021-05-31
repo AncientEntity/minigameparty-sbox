@@ -20,6 +20,7 @@ namespace Minigames
 			if(!allPlayers.Contains(this)) {
 				allPlayers.Add( this );
 			}
+			Inventory = new BaseInventory(this);
 			SetupPhysicsFromModel( PhysicsMotionType.Static, false );
 		}
 
@@ -54,6 +55,7 @@ namespace Minigames
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 			Dress();
+			//Inventory.SetActiveSlot( 0, true );
 			base.Respawn();
 
 			if(IsServer)
@@ -78,7 +80,8 @@ namespace Minigames
 					Camera = new FirstPersonCamera();
 				}
 			}
-
+			TickPlayerUse();
+			SimulateActiveChild( cl, ActiveChild );
 			if ( IsServer && LifeState == LifeState.Dead)
 			{
 				if ( MinigamesGame.game.currentState == MinigamesGame.gameStates.waiting )
@@ -89,7 +92,6 @@ namespace Minigames
 
 			var controller = GetActiveController();
 			controller?.Simulate( cl, this, GetActiveAnimator() );
-
 			//If we're running serverside and Attack1 was just pressed, spawn a ragdoll
 
 
@@ -102,7 +104,24 @@ namespace Minigames
 			//	ragdoll.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
 			//	ragdoll.PhysicsGroup.Velocity = EyeRot.Forward * 1000;
 			//}
+			//FindUsable();
 		}
+
+
+		//protected override Entity FindUsable()
+		//{
+		//	var tr = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 85 )
+		//		.Radius( 2 )
+		//		.HitLayer( CollisionLayer.Debris )
+		//		.Ignore( this )
+		//		.Run();
+
+		//	if ( tr.Entity == null ) return null;
+		//	if ( tr.Entity is not IUse use ) return null;
+		//	if ( !use.IsUsable( this ) ) return null;
+		//	ActiveChild = tr.Entity;
+		//	return tr.Entity;
+		//}
 
 		public override void OnKilled()
 		{
@@ -110,6 +129,8 @@ namespace Minigames
 			lastCam = Camera;
 			Camera = new SpectateRagdollCamera();
 			Controller = new NoclipController();
+
+			Inventory.DeleteContents();
 
 			EnableAllCollisions = false;
 
@@ -119,19 +140,9 @@ namespace Minigames
 
 			if(IsServer && living.Contains( this ) )
 			{
-				if(living.Count == 1)
-				{
-					points += 3;
-				} else if (living.Count == 2)
-				{
-					points += 2;
-				} else if (living.Count == 1)
-				{
-					points += 1;
-				}
-				AnnouncePlacement( living.Count );
+				GrantPoints();
 				living.Remove( this );
-				if(living.Count == 0)
+				if(living.Count == MinigamesGame.game.currentMinigame.minPlayers-1)
 				{
 					MinigamesGame.game.EndRound();
 				}
@@ -142,6 +153,23 @@ namespace Minigames
 		{
 			base.TakeDamage( info );
 			
+		}
+
+		public void GrantPoints()
+		{
+			if ( living.Count == 1 )
+			{
+				points += 3;
+			}
+			else if ( living.Count == 2 )
+			{
+				points += 2;
+			}
+			else if ( living.Count == 1 )
+			{
+				points += 1;
+			}
+			AnnouncePlacement( living.Count );
 		}
 
 		[ClientRpc]

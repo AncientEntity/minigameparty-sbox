@@ -27,6 +27,9 @@ namespace Minigames
 		public static Random random = new Random();
 		private static List<Entity> eventEntities = new List<Entity>();
 
+		[Net]
+		public bool paused { get; set; } = false;
+
 		//Game settings
 		[Net]
 		public int maxRounds { get; set; }
@@ -118,6 +121,10 @@ namespace Minigames
 
 		void RoundManagement()
 		{
+			if(paused)
+			{
+				return;
+			}
 			//Round must be happening
 			if ( GetTimeLeft() <= 0 )
 			{
@@ -126,8 +133,8 @@ namespace Minigames
 				{
 					timeLeft = 0;
 					roundNumber++;
-					currentMinigameIndex = random.Next( 0, minigames.Count );
-					if(forcedMinigame != -1)
+					PickNewMinigame();
+					if (forcedMinigame != -1)
 					{
 						currentMinigameIndex = forcedMinigame;
 						forcedMinigame = -1;
@@ -142,6 +149,12 @@ namespace Minigames
 					timeLeft = 0;
 					currentMinigame.EndMinigame();
 					currentState = gameStates.waiting;
+					foreach(MinigamePlayer player in MinigamePlayer.living)
+					{
+						player.GrantPoints();
+						player.Health = 100;
+						player.Inventory.DeleteContents();
+					}
 					foreach(Entity e in eventEntities)
 					{
 						if(e == null || !e.IsValid())

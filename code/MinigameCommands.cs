@@ -16,5 +16,11 @@ namespace Minigames
 		{
 			MinigamesGame.game.ForceMinigame(int.Parse(index));
 		}
+
+		[ServerCmd("togglepause")]
+		public static void TogglePause()
+		{
+			MinigamesGame.game.paused = !MinigamesGame.game.paused;
+		}
 	}
 }
