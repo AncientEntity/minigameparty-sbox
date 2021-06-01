@@ -33,7 +33,13 @@ namespace Minigames
 		//Game settings
 		[Net]
 		public int maxRounds { get; set; }
-		public float roundDuration = 60f;
+		public float roundDuration
+		{
+			get
+			{
+				return currentMinigame.roundTime;
+			}
+		}
 		public float waitingDuration = 5f;
 		public List<Minigame> minigames = new List<Minigame>();
 

@@ -7,19 +7,23 @@ namespace Minigames
 		public string name { get; set; }
 		public string desc { get; set; }
 		public int minPlayers { get; set; }
+
+		public int roundTime { get; set; } = 60;
+
 		public spawnZones spawnZone { get; set; }
 		public EventEntity eventEntity = null;
 
 
 		public Minigame() { }
 
-		public Minigame(string name, string desc, EventEntity eventEntity, int minPlayers = 1, spawnZones zone = spawnZones.openArea)
+		public Minigame(string name, string desc, EventEntity eventEntity, int minPlayers = 1, spawnZones zone = spawnZones.openArea, int roundTime=60)
 		{
 			this.name = name;
 			this.desc = desc;
 			this.minPlayers = minPlayers;
 			this.spawnZone = zone;
 			this.eventEntity = eventEntity;
+			this.roundTime = roundTime;
 		}
 
 		public void StartMinigame()
@@ -52,6 +56,9 @@ namespace Minigames
 			} else if (spawnZone == spawnZones.closedArea)
 			{
 				return SpawnPoints.RandomClosedAreaSpawnPoint();
+			} else if (spawnZone == spawnZones.custom)
+			{
+				return eventEntity.CustomSpawnPosition();
 			}
 			return SpawnPoints.RandomOpenAreaSpawnPoint();
 		}
@@ -61,13 +68,17 @@ namespace Minigames
 			waiting,
 			openArea,
 			closedArea,
+			custom,
 		}
 	}
 
 	public partial class MinigamesGame
 	{
+		[Event("hotloaded")]
 		public void InitializeMinigames()
 		{
+			minigames = new System.Collections.Generic.List<Minigame>();
+
 			if ( !IsServer )
 			{
 				minigames.Add( new Minigame( "Errorpocolypse", "Avoid the errors or you'll become one!", null ,1,Minigame.spawnZones.openArea) );
@@ -100,11 +111,11 @@ namespace Minigames
 			//WARNING
 			if ( !IsServer )
 			{
-				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", null, 1, Minigame.spawnZones.openArea ) );
+				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", null, 2, Minigame.spawnZones.custom,300) );
 			}
 			else
 			{
-				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", new CrateRunEventEntity(), 1, Minigame.spawnZones.openArea ) );
+				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", new GunSpleefEventEntity(), 2, Minigame.spawnZones.custom, 300 ) );
 			}
 
 

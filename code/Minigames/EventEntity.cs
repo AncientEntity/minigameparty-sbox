@@ -9,6 +9,10 @@ namespace Minigames
 
 		public abstract void OnMinigameStart();
 		public abstract void WhileEvent();
+		public virtual Vector3 CustomSpawnPosition()
+		{
+			return Vector3.Zero;
+		}
 
 	}
 
@@ -17,6 +21,15 @@ namespace Minigames
 		public EventProp() : base()
 		{
 			MinigamesGame.RegisterEventEntity( this );
+		}
+
+
+		public override void OnKilled()
+		{
+			if ( LifeState != LifeState.Alive )
+				return;
+			EnableAllCollisions = false;
+			PhysicsBody.MotionEnabled = true;
 		}
 	}
 }

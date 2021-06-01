@@ -78,9 +78,15 @@ namespace Minigames
 			}
 			public string RoundText { 
 				get {
-					return "Round:    "+MinigamesGame.game.roundNumber + "/"+MinigamesGame.game.maxRounds+"   Time Remaining: "+(int)MinigamesGame.game.GetTimeLeft(); 
+					return "Round:    "+MinigamesGame.game.roundNumber + "/"+MinigamesGame.game.maxRounds+"   Time Remaining: "+TimeFormatted( (int)MinigamesGame.game.GetTimeLeft()); 
 				}
 			}
+
+			public string TimeFormatted(int seconds )
+			{
+				return string.Format( "{0}:{1:D2}", seconds / 60, seconds % 60 );
+			}
+
 			public GameStats()
 			{
 				SetTemplate( "/ui/MinigamesHUD.html" );
