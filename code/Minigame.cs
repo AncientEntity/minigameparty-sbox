@@ -98,12 +98,12 @@ namespace Minigames
 			}
 			if ( !IsServer )
 			{
-				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", null, 2, Minigame.spawnZones.closedArea ) );
+				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", null, 2, Minigame.spawnZones.closedArea, 300 ) );
 			}
 			else
 			{
 
-				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", new YouGetAGunEventEntity(), 2, Minigame.spawnZones.closedArea ) );
+				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", new YouGetAGunEventEntity(), 2, Minigame.spawnZones.closedArea, 300) );
 			}
 
 			//WARNING

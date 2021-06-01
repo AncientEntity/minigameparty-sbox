@@ -18,7 +18,7 @@ namespace Minigames
 		public static Vector3 RandomClosedAreaSpawnPoint()
 		{
 			Vector3 finalVec = SpawnPointClosedArea.allSpawns[MinigamesGame.random.Next( 0, SpawnPointClosedArea.allSpawns.Count )].Position;
-			finalVec += new Vector3( MinigamesGame.random.Next( -100, 100 ), MinigamesGame.random.Next( -100, 100 ),0f);
+			finalVec += new Vector3( MinigamesGame.random.Next( -50, 50 ), MinigamesGame.random.Next( -50, 50 ),0f);
 			return finalVec;
 		}
 	}

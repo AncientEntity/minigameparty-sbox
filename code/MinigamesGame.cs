@@ -110,6 +110,23 @@ namespace Minigames
 			}
 		}
 
+		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+		{
+			base.ClientDisconnect( cl, reason );
+			foreach(MinigamePlayer player in MinigamePlayer.living.ToArray())
+			{
+				if(player == null || !player.IsValid())
+				{
+					MinigamePlayer.living.Remove( player );
+					MinigamePlayer.allPlayers.Remove( player );
+					if ( MinigamePlayer.living.Count <= currentMinigame.minPlayers - 1 )
+					{
+						EndRound();
+					}
+				}
+			}
+		}
+
 		public enum roundStates
 		{
 			waiting,
@@ -145,8 +162,13 @@ namespace Minigames
 						currentMinigameIndex = forcedMinigame;
 						forcedMinigame = -1;
 					}
-					foreach(MinigamePlayer player in MinigamePlayer.allPlayers)
+					foreach(MinigamePlayer player in MinigamePlayer.allPlayers.ToArray())
 					{
+						if(player == null || !player.IsValid())
+						{
+							MinigamePlayer.allPlayers.Remove( player );
+							continue;
+						}
 						player.Position = currentMinigame.GetRandomSpawn();
 					}
 					currentMinigame.StartMinigame();
@@ -159,8 +181,13 @@ namespace Minigames
 					timeLeft = 0;
 					currentMinigame.EndMinigame();
 					currentState = gameStates.waiting;
-					foreach(MinigamePlayer player in MinigamePlayer.living)
+					foreach(MinigamePlayer player in MinigamePlayer.living.ToArray())
 					{
+						if(player == null || !player.IsValid())
+						{
+							MinigamePlayer.living.Remove( player );
+							continue;
+						}
 						player.GrantPoints();
 						player.Health = 100;
 						player.Inventory.DeleteContents();

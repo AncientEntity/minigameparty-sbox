@@ -234,5 +234,18 @@ namespace Minigames
 				suffix = "rd";
 			ChatBox.AddChatEntry("Minigames",this.Owner.ToString().Split("/")[1] + " got "+placement+suffix+" place.","materials/minigames/tux.png");
 		}
+
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+			if(living.Contains(this))
+			{
+				living.Remove( this );
+			}
+			if(allPlayers.Contains(this))
+			{
+				allPlayers.Remove( this );
+			}
+		}
 	}
 }

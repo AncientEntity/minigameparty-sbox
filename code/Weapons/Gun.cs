@@ -6,8 +6,8 @@ partial class Gun : Weapon
 	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl";
 	public override float PrimaryRate => 10;
 
-	public int ammo = 5;
-	public int perClip = 5;
+	public int ammo = 10;
+	public int perClip = 10;
 
 	public TimeSince TimeSinceDischarge { get; set; }
 	public TimeSince TimeSinceReload { get; set; }
