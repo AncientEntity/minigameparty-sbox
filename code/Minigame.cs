@@ -94,7 +94,19 @@ namespace Minigames
 
 				minigames.Add( new Minigame( "You Get A Gun!", "You know what to do...", new YouGetAGunEventEntity(), 2, Minigame.spawnZones.closedArea ) );
 			}
-			//minigames.Add( new Minigame( "Terrynado", "Tornado but it's a bunch of Terries!", null ) );
+
+			//WARNING
+			//WARNING - RENAMING GUN SPLEEF TO SOMETHING ELSE WILL BREAK GUN()'s UNLIMITED AMMO/NO PLAYER DAMAGE.
+			//WARNING
+			if ( !IsServer )
+			{
+				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", null, 1, Minigame.spawnZones.openArea ) );
+			}
+			else
+			{
+				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", new CrateRunEventEntity(), 1, Minigame.spawnZones.openArea ) );
+			}
+
 
 		}
 

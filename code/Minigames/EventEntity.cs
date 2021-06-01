@@ -11,4 +11,12 @@ namespace Minigames
 		public abstract void WhileEvent();
 
 	}
+
+	public class EventProp : Prop
+	{
+		public EventProp() : base()
+		{
+			MinigamesGame.RegisterEventEntity( this );
+		}
+	}
 }

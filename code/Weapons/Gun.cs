@@ -41,7 +41,11 @@ partial class Gun : Weapon
 
 	public override void AttackPrimary()
 	{
-		ammo--;
+		//Unlimited ammo in Crate Run.
+		if ( Minigames.MinigamesGame.game.currentMinigame.name != "Gun Spleef" )
+		{
+			ammo--;
+		}
 		TimeSincePrimaryAttack = 0;
 		TimeSinceSecondaryAttack = 0;
 
@@ -79,7 +83,10 @@ partial class Gun : Weapon
 					.UsingTraceResult( tr )
 					.WithAttacker( Owner )
 					.WithWeapon( this );
-
+				if(tr.Entity.GetType() == typeof(Minigames.MinigamePlayer) && Minigames.MinigamesGame.game.currentMinigame.name == "Gun Spleef" )
+				{
+					return;
+				}
 				tr.Entity.TakeDamage( damage );
 			}
 		}

@@ -11,7 +11,9 @@ namespace Minigames
 
 		public int errorCount = 25;
 		public float startingSize = 0.5f;
-		public float growSpeed = 0.01f;
+		public float growSpeed = 0.7f;
+
+		private TimeSince sinceEventStart;
 
 		public ErrorEventEntity()
 		{
@@ -22,6 +24,7 @@ namespace Minigames
 		{
 			allErrors = new List<ErrorEntity>();
 			errorPositions = new List<Vector3>();
+			sinceEventStart = 0;
 		}
 
 		public override void WhileEvent()
@@ -31,11 +34,14 @@ namespace Minigames
 				SpawnError();
 			}
 
+			Host.AssertServer();
 			int c = 0;
+			float curScale = growSpeed * sinceEventStart;
 			foreach(ErrorEntity ent in allErrors)
 			{
-				ent.Scale += growSpeed;
+				ent.Scale = curScale;
 				ent.Position = errorPositions[c];
+				ent.Velocity = Vector3.Zero;
 				c++;
 			}
 		}
@@ -49,6 +55,7 @@ namespace Minigames
 			erEnt.Rotation = Rotation.FromAxis(new Vector3( MinigamesGame.random.Next( 0, 360 ) , MinigamesGame.random.Next( 0, 360 ) , MinigamesGame.random.Next( 0, 360 )), (float)MinigamesGame.random.NextDouble());
 			erEnt.EnableAllCollisions = true;
 			erEnt.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
+			erEnt.PhysicsBody.GravityScale = 0f;
 			erEnt.RenderColor = Color32.Red;
 			allErrors.Add( erEnt );
 			errorPositions.Add( erEnt.Position );
