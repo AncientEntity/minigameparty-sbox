@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sandbox;
 namespace Minigames
 {
-	public class HardcoreParkourEventEntity : EventEntity
+	public partial class HardcoreParkourEventEntity : EventEntity
 	{
 		public Vector3 centerPos;
 		public string crateModel = "models/citizen_props/crate01.vmdl";
@@ -107,6 +107,8 @@ namespace Minigames
 				} 
 				if (player.Position.z >= endCrates[0].Position.z && player.Position.x >= endCrates[0].Position.x)
 				{
+					Host.AssertServer();
+					Test(); //RPC Not being CALLED :((((
 					player.TakeDamage( DamageInfo.Generic( 99999f ) );
 					curPos += 1;
 				}
@@ -116,5 +118,12 @@ namespace Minigames
 				}
 			}
 		}
+		[ClientRpc]
+		public void Test()
+		{
+			Log.Error( "TEST" );
+		}
 	}
+
+
 }
