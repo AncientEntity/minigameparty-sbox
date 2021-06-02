@@ -15,6 +15,42 @@ namespace Minigames
 		public int points { get; set; }
 		public ICamera lastCam = null;
 
+		public Vector3 Position {
+			get
+			{
+				return base.Position;
+			}
+			set
+			{
+				if(isFrozen)
+				{
+					frozenPos =value;
+				}
+				base.Position = value;
+
+			}
+
+		}
+
+
+		private Vector3 frozenPos = Vector3.Zero;
+		public bool isFrozen
+		{
+			get
+			{
+				return _frozen;
+			}
+			set
+			{
+				_frozen = value;
+				if(value)
+				{
+					frozenPos = Position;
+				}
+			}
+		}
+		private bool _frozen = false;
+
 		public MinigamePlayer()
 		{
 			if(!allPlayers.Contains(this)) {
@@ -103,6 +139,11 @@ namespace Minigames
 				{
 					Respawn();
 				}
+			}
+
+			if(isFrozen)
+			{
+				Position = frozenPos;
 			}
 
 			var controller = GetActiveController();
@@ -205,19 +246,25 @@ namespace Minigames
 
 		public void GrantPoints()
 		{
-			if ( living.Count == 1 )
+			int placement = living.Count;
+			//if(MinigamesGame.game.currentMinigame.invertedPoints)
+			//{
+			//	placement = allPlayers.Count - living.Count + 1;
+			//}
+
+			if ( placement == 1 )
 			{
 				points += 3;
 			}
-			else if ( living.Count == 2 )
+			else if ( placement == 2 )
 			{
 				points += 2;
 			}
-			else if ( living.Count == 1 )
+			else if ( placement == 1 )
 			{
 				points += 1;
 			}
-			AnnouncePlacement( living.Count );
+			AnnouncePlacement( placement );
 		}
 
 		[ClientRpc]

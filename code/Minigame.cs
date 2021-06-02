@@ -13,10 +13,11 @@ namespace Minigames
 		public spawnZones spawnZone { get; set; }
 		public EventEntity eventEntity = null;
 
+		public bool invertedPoints = false;
 
 		public Minigame() { }
 
-		public Minigame(string name, string desc, EventEntity eventEntity, int minPlayers = 1, spawnZones zone = spawnZones.openArea, int roundTime=60)
+		public Minigame(string name, string desc, EventEntity eventEntity, int minPlayers = 1, spawnZones zone = spawnZones.openArea, int roundTime=60, bool invertedPoints=false)
 		{
 			this.name = name;
 			this.desc = desc;
@@ -24,6 +25,7 @@ namespace Minigames
 			this.spawnZone = zone;
 			this.eventEntity = eventEntity;
 			this.roundTime = roundTime;
+			this.invertedPoints = invertedPoints;
 		}
 
 		public void StartMinigame()
@@ -111,11 +113,20 @@ namespace Minigames
 			//WARNING
 			if ( !IsServer )
 			{
-				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", null, 2, Minigame.spawnZones.custom,300) );
+				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", null, 2, Minigame.spawnZones.custom, 300 ) );
 			}
 			else
 			{
 				minigames.Add( new Minigame( "Gun Spleef", "Shoot The Boxes!", new GunSpleefEventEntity(), 2, Minigame.spawnZones.custom, 300 ) );
+			}
+
+			if ( !IsServer )
+			{
+				minigames.Add( new Minigame( "Hardcore Parkour", "If point A is delusion and point B is the hospital.", null, 1, Minigame.spawnZones.custom, 300,false ) );
+			}
+			else
+			{
+				minigames.Add( new Minigame( "Hardcore Parkour", "If point A is delusion and point B is the hospital.", new HardcoreParkourEventEntity(), 1, Minigame.spawnZones.custom, 300, false ) );
 			}
 
 

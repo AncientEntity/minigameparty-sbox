@@ -162,7 +162,8 @@ namespace Minigames
 						currentMinigameIndex = forcedMinigame;
 						forcedMinigame = -1;
 					}
-					foreach(MinigamePlayer player in MinigamePlayer.allPlayers.ToArray())
+					currentMinigame.StartMinigame();
+					foreach (MinigamePlayer player in MinigamePlayer.allPlayers.ToArray())
 					{
 						if(player == null || !player.IsValid())
 						{
@@ -171,7 +172,6 @@ namespace Minigames
 						}
 						player.Position = currentMinigame.GetRandomSpawn();
 					}
-					currentMinigame.StartMinigame();
 					Log.Info( "Starting next round: " + currentMinigame.name + "|" + currentMinigame.desc );
 					currentState = gameStates.playing;
 
@@ -195,7 +195,7 @@ namespace Minigames
 					}
 					foreach(Entity e in eventEntities)
 					{
-						if(e == null || !e.IsValid())
+						if(e == null)
 						{
 							continue;
 						}

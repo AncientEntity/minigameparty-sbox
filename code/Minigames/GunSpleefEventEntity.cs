@@ -11,6 +11,8 @@ namespace Minigames
 
 		private List<EventProp> allCrates = new List<EventProp>();
 
+		private TimeSince eventStarted;
+		private bool startingEvent = false;
 		public GunSpleefEventEntity()
 		{
 			centerPos = new Vector3( 3776, 448, 768 );
@@ -35,15 +37,16 @@ namespace Minigames
 
 		public override void OnMinigameStart()
 		{
+			startingEvent = false;
+			eventStarted = 0;
 			allCrates = new List<EventProp>();
 			SpawnCrateFloor( 0f );
 			SpawnCrateFloor( 400f );
 			SpawnCrateFloor( 800f );
 			foreach(MinigamePlayer player in MinigamePlayer.allPlayers)
 			{
-				Gun gun = new Gun();
-				player.Inventory.Add(gun,true);
 				player.Velocity = Vector3.Zero; //Try to prevent people from running off the boxes when they first teleport.
+				player.isFrozen = true;
 			}
 		}
 
@@ -70,6 +73,14 @@ namespace Minigames
 				if(player.Position.z <= -269)
 				{
 					player.TakeDamage( DamageInfo.Generic( 999999f ) );
+				}
+				if(eventStarted > 1f && !startingEvent)
+				{
+					Gun gun = new Gun();
+					player.Inventory.Add( gun, true );
+					player.isFrozen = false;
+					startingEvent = true;
+
 				}
 			}
 		}
