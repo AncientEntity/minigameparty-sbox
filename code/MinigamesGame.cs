@@ -139,6 +139,27 @@ namespace Minigames
 			{
 				RoundManagement();
 			}
+			if ( currentState == gameStates.ending )
+			{
+				MinigamePlayer.SortWinningPlayers();
+				if ( timeLeft >= 5f )
+				{
+					roundNumber = 0;
+					currentState = gameStates.waiting;
+					foreach(MinigamePlayer player in MinigamePlayer.allPlayers)
+					{
+						player.points = 0;
+					}
+					if ( IsClient )
+					{
+						MinigamesHUD.ToggleEndScreen( false );
+					}
+				} else if(IsClient)
+				{
+					MinigamesHUD.ToggleEndScreen( true );
+				}
+				//Round must be happening
+			}
 
 		}
 
@@ -148,7 +169,7 @@ namespace Minigames
 			{
 				return;
 			}
-			//Round must be happening
+
 			if ( GetTimeLeft() <= 0 )
 			{
 				//Start a new round and exit waiting mode.
@@ -181,6 +202,11 @@ namespace Minigames
 					timeLeft = 0;
 					currentMinigame.EndMinigame();
 					currentState = gameStates.waiting;
+					if(roundNumber == maxRounds-1)
+					{
+						//Last Round.
+						currentState = gameStates.ending;
+					}
 					foreach(MinigamePlayer player in MinigamePlayer.living.ToArray())
 					{
 						if(player == null || !player.IsValid())
@@ -215,6 +241,7 @@ namespace Minigames
 		{
 			waiting,
 			playing,
+			ending,
 		}
 
 		public float GetTimeLeft()
@@ -225,6 +252,9 @@ namespace Minigames
 			} else if (currentState == gameStates.playing)
 			{
 				return roundDuration - timeLeft;
+			} else if (currentState == gameStates.ending)
+			{
+				return 5f - timeLeft;
 			}
 			return 0;
 		}

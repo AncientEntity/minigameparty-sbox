@@ -46,7 +46,7 @@ namespace Minigames
 			foreach(MinigamePlayer player in MinigamePlayer.allPlayers)
 			{
 				player.Velocity = Vector3.Zero; //Try to prevent people from running off the boxes when they first teleport.
-				player.isFrozen = true;
+				//player.isFrozen = true;
 			}
 		}
 

@@ -67,57 +67,35 @@ text.score
 	text-shadow: 5px 5px 50px rgba( black, 0.8 );
 }
 
-
-InventoryBar {
-    position: absolute;
-    width: 100%;
-    bottom: 48px;
-    justify-content: center;
-    align-items: flex-end;
+WinScreen {
+	position: absolute;
+	left: 30%;
+	top: 25%;
 }
 
-InventoryIcon {
-    width: 80px;
-    height: 80px;
-    border: 1px solid rgba( white, 0.4 );
-    background-color: rgba( #4d98ce, 0.0 );
-    margin: 0px 2px;
-    position: relative;
-    transition: all 0.2s ease-in-out;
-    margin-top: 10px;
-    font-family: poppins;
+.winPanel
+{
+	background-color: rgba(80,80,80,0.4);
+	width: 40%;
+	height: 50%;
+	justify-content: center;
 
-    .item-name {
-        padding: 5px;
-        color: white;
-        text-align: center;
-        left: 0;
-        right: 0;
-        font-size: 11px;
-        position: absolute;
-        bottom: 0;
-        opacity: 0.5;
-        transition: all 0.5s ease-in-out;
-    }
+}
 
-    .slot-number {
-        font-size: 15px;
-        color: white;
-        font-weight: 500;
-        opacity: 0.1;
-        position: absolute;
-        top: 1px;
-        right: 5px;
-    }
+.winTitle {
+	font-family: Poppins;
+	font-size: 50px;
+	font-weight: 900;
+	color: white;
+	position: center;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
+}
 
-    &.active {
-        background-color: rgba( #4d98ce, 0.5 );
-        border: 1px solid rgba( white, 0.8 );
-        transition: all 0.1s ease-out;
-
-        .item-name {
-            opacity: 1;
-            transition: all 0.1s ease-out;
-        }
-    }
+.winSubTitle {
+	font-family: Poppins;
+	font-size: 30px;
+	font-weight: 900;
+	color: white;
+	position: absolute;
+	text-shadow: 5px 5px 50px rgba( black, 0.8 );
 }

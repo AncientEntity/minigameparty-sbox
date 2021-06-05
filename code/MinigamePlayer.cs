@@ -11,6 +11,7 @@ namespace Minigames
 
 		public static List<MinigamePlayer> allPlayers = new List<MinigamePlayer>();
 		public static List<MinigamePlayer> living = new List<MinigamePlayer>();
+		public static List<MinigamePlayer> winningPlayers = new List<MinigamePlayer>();
 		[Net]
 		public int points { get; set; }
 		public ICamera lastCam = null;
@@ -293,6 +294,12 @@ namespace Minigames
 			{
 				allPlayers.Remove( this );
 			}
+		}
+		public static void SortWinningPlayers()
+		{
+			winningPlayers = new List<MinigamePlayer>();
+			winningPlayers.AddRange( allPlayers );
+			winningPlayers = winningPlayers.OrderBy( o => o.points ).Reverse().ToList();
 		}
 	}
 }
