@@ -87,7 +87,12 @@ namespace Minigames
 			{
 				Log.Info( "My Gamemode Has Created Clientside!" );
 			}
+			
+		}
 
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
 		}
 
 		/// <summary>

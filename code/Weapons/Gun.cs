@@ -24,7 +24,7 @@ partial class Gun : Weapon
 	/// </summary>
 	public override bool CanPrimaryAttack()
 	{
-		if ( !Owner.Input.Pressed( InputButton.Attack1 ) || ammo <= 0 || TimeSinceReload <= 3f)
+		if ( !Input.Pressed( InputButton.Attack1 ) || ammo <= 0 || TimeSinceReload <= 3f)
 			return false;
 
 		return base.CanPrimaryAttack();
@@ -99,7 +99,7 @@ partial class Gun : Weapon
 
 		TimeSinceDischarge = 0;
 
-		var muzzle = GetAttachment( "muzzle" );
+		var muzzle = GetAttachment( "muzzle" ) ?? default;
 		var pos = muzzle.Position;
 		var rot = muzzle.Rotation;
 		Shoot( pos, rot.Forward );

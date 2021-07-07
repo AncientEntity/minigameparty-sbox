@@ -38,7 +38,7 @@ namespace minigameparty.Weapons
 
 		public override bool CanPrimaryAttack()
 		{
-			if ( !Owner.Input.Pressed( InputButton.Attack1 ) || lastShot < 0.8f)
+			if ( !Input.Pressed( InputButton.Attack1 ) || lastShot < 0.8f)
 				return false;
 
 			return base.CanPrimaryAttack();
